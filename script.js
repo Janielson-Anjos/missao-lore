@@ -61,7 +61,7 @@ function verificar() {
         document.getElementById("resposta").value = "";
         feedback.innerText = "";
         atualizarUI();
-    }, 1800);
+    }, 8000);
     
 } else {
     feedback.innerText = "❌ Tenta de novo 😜";
@@ -149,13 +149,123 @@ function animar() {
 
 animar();
 
+const fotos = [
+  "foto1.jpeg",
+  "foto2.jpeg",
+  "foto3.jpeg",
+  "foto4.jpeg",
+  "foto5.jpeg",
+  "foto6.jpeg",
+  "foto7.jpeg",
+  "foto8.jpeg",
+  "foto9.jpeg",
+  "foto10.jpeg",
+  "foto11.jpeg",
+  "foto12.jpeg"
+];
+let indexSlide = 0;
+
+const mensagem = [
+  "Feliz aniversário ❤️",
+  "Essa foi só uma pequena surpresa...",
+  "Porque você merece o mundo inteiro",
+  "Eu te amo 💖"
+];
+
+let linha = 0;
+let letra = 0;
+
+function iniciarSlideshow() {
+  setInterval(() => {
+    indexSlide = (indexSlide + 1) % fotos.length;
+    const img = document.getElementById("slide1");
+    if (img) img.src = fotos[indexSlide];
+  }, 3000);
+}
+
+function escreverTexto() {
+  const el = document.getElementById("type1");
+  if (!el) return;
+
+  if (linha < mensagem.length) {
+    if (letra < mensagem[linha].length) {
+      el.innerHTML += mensagem[linha][letra];
+      letra++;
+      setTimeout(escreverTexto, 50);
+    } else {
+      el.innerHTML += "<br><br>";
+      linha++;
+      letra = 0;
+      setTimeout(escreverTexto, 800);
+    }
+  }
+}
+
+function esconderBotaoMusica() {
+  const btn = document.getElementById("btn-musica");
+  if (btn) btn.hidden = true;
+}
+
+function ligarBotaoMusica() {
+  const btn = document.getElementById("btn-musica");
+  const audio = document.getElementById("music1");
+  if (!btn || !audio) return;
+  btn.addEventListener("click", function onMusicaClick() {
+    audio.volume = 0.5;
+    audio.play().then(function () {
+      esconderBotaoMusica();
+    }).catch(function () {});
+    btn.removeEventListener("click", onMusicaClick);
+  });
+  audio.addEventListener("playing", function () {
+    esconderBotaoMusica();
+  });
+}
+
+function tocarMusica() {
+  const audio = document.getElementById("music1");
+  if (!audio) return;
+  audio.volume = 0.5;
+  audio.play().then(function () {
+    esconderBotaoMusica();
+  }).catch(function () {});
+}
+
 function mostrarFinal() {
+  linha = 0;
+  letra = 0;
+  indexSlide = 0;
+
   document.body.innerHTML = `
     <div class="final-screen">
-      <h1 class="fade">💖 Feliz Aniversário 💖</h1>
-      <p class="fade delay1">Essa foi só uma forma de te fazer sorrir...</p>
-      <p class="fade delay2">Porque você merece tudo isso e muito mais</p>
-      <p class="fade delay3">Eu te amo ❤️</p>
+      <audio id="music1" src="musica.mp3" preload="auto" loop></audio>
+
+      <div id="slideshow">
+        <img id="slide1" src="${fotos[0]}" alt="">
+      </div>
+
+      <div id="texto-final">
+        <div id="type1"></div>
+      </div>
+
+      <button type="button" id="btn-musica" class="btn-musica">Tocar música</button>
     </div>
   `;
+
+  iniciarSlideshow();
+  escreverTexto();
+  ligarBotaoMusica();
+  tocarMusica();
+}
+
+
+function entrar() {
+  const senha = document.getElementById("senha").value.toLowerCase();
+
+  if (senha === "amor") { // MUDE ISSO
+    document.getElementById("login").style.display = "none";
+    document.getElementById("app").style.display = "block";
+  } else {
+    document.getElementById("erro").innerText = "❌ Senha errada";
+  }
 }
