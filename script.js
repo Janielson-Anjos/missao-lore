@@ -9,7 +9,7 @@ const fases = [
   {
     pergunta: "Qual comida que vc gosta e eu sempre peço?",
     resposta: "hamburguer",
-    sucesso: "🍕 Acertou! Olha na cozinha..."
+    sucesso: "🍔 Acertou! Olha na cozinha..."
   },
   {
     pergunta: "Qual serie que mais passamos tempo assistindo juntos?",
@@ -73,16 +73,58 @@ function verificar() {
 // iniciar
 atualizarUI();
 
+/** Mesmas cores do linear-gradient(135deg, ...) em style.css (body) */
+const BG_GRADIENT_START = "#ff758c";
+const BG_GRADIENT_END = "#ff7eb3";
 
-const canvas = document.getElementById("hearts");
-const ctx = canvas.getContext("2d");
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
+let canvas = null;
+let ctx = null;
 let hearts = [];
+let heartsExplosao = [];
+
+let heartGradientCache = null;
+let heartGradientKey = "";
+
+function aplicarPreenchimentoCoracao() {
+  if (!ctx || !canvas) return;
+  if (document.querySelector(".final-screen")) {
+    const key = canvas.width + "x" + canvas.height;
+    if (!heartGradientCache || heartGradientKey !== key) {
+      const g = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      g.addColorStop(0, BG_GRADIENT_START);
+      g.addColorStop(1, BG_GRADIENT_END);
+      heartGradientCache = g;
+      heartGradientKey = key;
+    }
+    ctx.fillStyle = heartGradientCache;
+    ctx.globalAlpha = 0.92;
+  } else {
+    heartGradientCache = null;
+    heartGradientKey = "";
+    ctx.fillStyle = "rgba(255,255,255,0.7)";
+    ctx.globalAlpha = 1;
+  }
+}
+
+function initHeartsCanvas(resetHearts) {
+  const el = document.getElementById("hearts");
+  if (!el) {
+    canvas = null;
+    ctx = null;
+    return;
+  }
+  canvas = el;
+  ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  if (resetHearts) {
+    hearts = [];
+    heartsExplosao = [];
+  }
+}
 
 function criarCoracao() {
+  if (!canvas) return;
   hearts.push({
     x: Math.random() * canvas.width,
     y: canvas.height,
@@ -92,7 +134,7 @@ function criarCoracao() {
 }
 
 function desenharCoracao(x, y, size) {
-  ctx.fillStyle = "rgba(255,255,255,0.7)";
+  if (!ctx) return;
   ctx.beginPath();
   ctx.moveTo(x, y);
   ctx.bezierCurveTo(x - size, y - size, x - size * 2, y + size/2, x, y + size * 2);
@@ -119,10 +161,13 @@ function criarCoracaoExplosao() {
   heartsExplosao.push(heart);
 }
 
-let heartsExplosao = [];
-
 function animar() {
+  if (!canvas || !ctx) {
+    requestAnimationFrame(animar);
+    return;
+  }
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  aplicarPreenchimentoCoracao();
 
   // corações flutuando
   if (Math.random() < 0.05) criarCoracao();
@@ -147,7 +192,14 @@ function animar() {
   requestAnimationFrame(animar);
 }
 
+initHeartsCanvas(false);
 animar();
+
+window.addEventListener("resize", function () {
+  if (!canvas) return;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
 
 const fotos = [
   "foto1.jpeg",
@@ -238,6 +290,7 @@ function mostrarFinal() {
 
   document.body.innerHTML = `
     <div class="final-screen">
+      <canvas id="hearts"></canvas>
       <audio id="music1" src="musica.mp3" preload="auto" loop></audio>
 
       <div id="slideshow">
@@ -252,6 +305,7 @@ function mostrarFinal() {
     </div>
   `;
 
+  initHeartsCanvas(true);
   iniciarSlideshow();
   escreverTexto();
   ligarBotaoMusica();

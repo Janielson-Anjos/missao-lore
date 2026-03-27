@@ -109,6 +109,12 @@ button:hover {
   width: 100%;
   height: 100%;
   z-index: -1;
+  pointer-events: none;
+}
+
+.final-screen #hearts {
+  z-index: 0;
+  inset: 0;
 }
 
 
@@ -180,7 +186,7 @@ button:hover {
 #slideshow {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
