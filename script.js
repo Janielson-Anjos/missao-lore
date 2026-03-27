@@ -8,7 +8,7 @@ const fases = [
   },
   {
     pergunta: "Qual comida que vc gosta e eu sempre peço?",
-    resposta: "hamburguer",
+    resposta: "hambúrguer",
     sucesso: "🍔 Acertou! Olha na cozinha..."
   },
   {
