@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Missão 💖</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<audio id="som-acerto" src="acerto.mp3"></audio>
+<audio id="som-erro" src="erro.mp3"></audio>
+<body>
+<canvas id="hearts"></canvas>
+
+<div class="container">
+
+  <div class="card">
+    <div class="topo">
+      <span id="fase-info">Fase 1 de 4</span>
+      <div class="barra">
+        <div id="progresso"></div>
+      </div>
+    </div>
+
+    <h1 id="titulo">💌 Missão especial</h1>
+    <p id="pergunta"></p>
+
+    <input id="resposta" placeholder="Digite aqui..." />
+    <button onclick="verificar()">Responder</button>
+
+    <p id="feedback"></p>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
