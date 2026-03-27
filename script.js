@@ -2,23 +2,23 @@ let fase = 0;
 
 const fases = [
   {
-    pergunta: "Onde foi nosso primeiro encontro?",
-    resposta: "shopping",
+    pergunta: "Onde foi nosso primeiro Beijo?",
+    resposta: "na frente do b1",
     sucesso: "💖 Boa! Procure no guarda-roupa..."
   },
   {
-    pergunta: "Qual comida eu sempre peço?",
-    resposta: "pizza",
+    pergunta: "Qual comida que vc gosta e eu sempre peço?",
+    resposta: "hamburguer",
     sucesso: "🍕 Acertou! Olha na cozinha..."
   },
   {
-    pergunta: "Qual filme vimos juntos?",
-    resposta: "titanic",
+    pergunta: "Qual serie que mais passamos tempo assistindo juntos?",
+    resposta: "the walking dead" || "twd",
     sucesso: "🎬 Perfeito! Veja perto da TV..."
   },
   {
     pergunta: "Quem te ama muito? 😏",
-    resposta: "seu nome",
+    resposta: "jan",
     sucesso: "❤️ Última pista: olha na cama..."
   }
 ];
