@@ -13,7 +13,7 @@ const fases = [
   },
   {
     pergunta: "Qual serie que mais passamos tempo assistindo juntos?",
-    resposta: "the walking dead" || "twd",
+    resposta: "the walking dead",
     sucesso: "🎬 Perfeito! Veja perto da TV..."
   },
   {

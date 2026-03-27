@@ -189,8 +189,8 @@ button:hover {
 }
 
 #slide1 {
-  max-width: min(90vw, 380px);
-  max-height: 40vh;
+  max-width: min(92vw, 440px);
+  max-height: 46vh;
   width: auto;
   height: auto;
   object-fit: contain;
@@ -200,8 +200,8 @@ button:hover {
 
 @media (max-width: 600px) {
   #slide1 {
-    max-width: min(88vw, 300px);
-    max-height: 30vh;
+    max-width: min(90vw, 320px);
+    max-height: 33vh;
   }
 }
 
